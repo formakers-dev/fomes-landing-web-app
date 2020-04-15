@@ -1,0 +1,65 @@
+//contact style
+.contact {
+  display: flex;
+  justify-content: flex-end;
+  font-family: NotoSansKR-Bold, sans-serif;
+  font-size: 20px;
+  color: white;
+  margin: 20px 30px 10px 0;
+}
+
+//card style
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  //min-width: 915px;
+  .card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 4px 0 rgba(60, 60, 67, 0.15);
+    margin: 15px;
+    border-radius: 14px;
+    overflow: hidden;
+    .firstSub {
+      font-size: 25px;
+      font-family: NotoSansKR-Bold, sans-serif;
+      color: rgba(0, 0, 0, 0.75);
+      display: block;
+      margin: 35px 30px 0 30px;
+    }
+    .secondSub {
+      font-size: 15px;
+      color: rgba(0, 0, 0, 0.75);
+      display: block;
+      margin: 10px 0 10px 0;
+    }
+    .cardImg {
+      //width: 100%;
+      margin-bottom: 40px;
+    }
+  }
+}
+
+//logo style
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  .colorBar {
+    margin: 10px 0 15px 0;
+  }
+  .fomesSub {
+    font-family: NotoSansKR-Bold, sans-serif;
+    font-size: 38px;
+    color: #ffffff;
+    margin: 10px 0 20px 0;
+  }
+  .download {
+    margin-bottom: 20px;
+  }
+}
+
+//copyright style
+.copyright {
+  color: #ffffff;
+  font-size: 20px;
+}
+
