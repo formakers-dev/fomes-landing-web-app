@@ -24,18 +24,32 @@
             </div>
             <div>
                 <img class="fomesLogo" src="../assets/images/fomes.png" alt="">
+                <vue-typed-js class="fomesSub"
+                              :smartBackspace="true"
+                              :typeSpeed="170"
+                              :startDelay="1000"
+                              :backSpeed="250"
+                              :backDelay="900"
+                              :loop="true"
+                              :strings="['포메스']">
+                    <span class="fomesSub">신작게임 놀이터, <span class="typing"></span></span>
+                </vue-typed-js>
             </div>
-            <span class="fomesSub">신작게임 놀이터, 포메스</span>
+
             <div>
-                <img class="download" src="../assets/images/download.png" alt="">
+                <a href="https://play.google.com/store/apps/details?id=com.formakers.fomes&hl=ko" target="_blank">
+                    <img class="download" src="../assets/images/download.png" alt="">
+                </a>
             </div>
+            <span class="copyright">Copyright © 2020 ForMakers</span>
         </div>
-        <span class="copyright">Copyright © 2020 ForMakers</span>
     </div>
 </template>
 
 <script>
-    export default {}
+    export default {
+
+    }
 </script>
 
 <style lang="scss" src="./Home.scss">
