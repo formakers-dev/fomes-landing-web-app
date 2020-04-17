@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div id="starsFirst"></div>
+        <div id="starsSecond"></div>
+        <div id="starsThird"></div>
         <span class="contact">contact@formakers.net</span>
         <div class="cardContainer">
             <div class="card">
@@ -26,7 +29,7 @@
                 <img class="fomesLogo" src="../assets/images/fomes.png" alt="">
                 <vue-typed-js class="fomesSub"
                               :smartBackspace="true"
-                              :typeSpeed="170"
+                              :typeSpeed="90"
                               :startDelay="1000"
                               :backSpeed="250"
                               :backDelay="900"
@@ -35,21 +38,16 @@
                     <span class="fomesSub">신작게임 놀이터, <span class="typing"></span></span>
                 </vue-typed-js>
             </div>
-
-            <div>
-                <a href="https://play.google.com/store/apps/details?id=com.formakers.fomes&hl=ko" target="_blank">
-                    <img class="download" src="../assets/images/download.png" alt="">
-                </a>
-            </div>
+            <a href="https://play.google.com/store/apps/details?id=com.formakers.fomes&hl=ko" target="_blank">
+                <img class="download" src="../assets/images/download.png" alt="">
+            </a>
             <span class="copyright">Copyright © 2020 ForMakers</span>
         </div>
     </div>
 </template>
 
 <script>
-    export default {
-
-    }
+    export default {}
 </script>
 
 <style lang="scss" src="./Home.scss">
