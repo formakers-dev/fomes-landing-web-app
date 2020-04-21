@@ -98,7 +98,7 @@
                backDelay: 900,
                loop: true,
                strings: ['포메스'],
-            }
+            },
          }
       }
    }
