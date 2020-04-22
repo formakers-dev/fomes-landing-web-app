@@ -5,7 +5,9 @@
       <div id="starsThird"></div>
       <div class="content">
          <div class="contactBox">
-            <span class="contact">contact@formakers.net</span>
+            <a href="mailto:contact@formakers.net">
+               <span class="contact">contact@formakers.net</span>
+            </a>
          </div>
 
          <!--캐러셀 인트로카드-->
