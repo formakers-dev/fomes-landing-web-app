@@ -190,7 +190,7 @@ body {
   .content {
     overflow: scroll;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
     margin-bottom: 0;
 
@@ -200,6 +200,7 @@ body {
 
     .logoContainer {
       margin-top: 10px;
+      order: 1;
 
       .colorBar {
         margin: 10px 0 10px 0;
@@ -228,6 +229,7 @@ body {
     .carouselContainer {
       margin-bottom: 30px;
       width: 240px;
+      order: 2;
 
       .carouselCard {
         background-color: #ffffff;
@@ -260,6 +262,8 @@ body {
 
     .contactBox {
       padding: 0;
+      order: 3;
+
       .contact {
         display: flex;
         justify-content: center;
@@ -269,10 +273,11 @@ body {
     }
   }
   .copyright {
-    display: flex;
-    justify-content: center;
+    //display: flex;
+    //justify-content: center;
     margin: 10px 0;
     font-size: 12px;
+    order: 4;
   }
 }
 

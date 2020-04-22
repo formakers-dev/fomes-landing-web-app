@@ -71,8 +71,8 @@
                </a>
             </div>
          </div>
+         <div class="copyright">Copyright © 2020 ForMakers</div>
       </div>
-      <div class="copyright">Copyright © 2020 ForMakers</div>
    </div>
 </template>
 
