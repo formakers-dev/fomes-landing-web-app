@@ -11,7 +11,7 @@
         components: {
             HomeComponent
         },
-        el: '#app'
+        // el: '#app'
     }
 </script>
 

@@ -4,10 +4,13 @@
       <div id="starsSecond"></div>
       <div id="starsThird"></div>
       <div class="content">
-         <span class="contact">contact@formakers.net</span>
+         <div class="contactBox">
+            <span class="contact">contact@formakers.net</span>
+         </div>
 
          <!--캐러셀 인트로카드-->
-         <VueSlickCarousel class="carouselContainer" v-bind="carouselSettings" v-if="true">
+         <VueSlickCarousel class="carouselContainer" v-bind="carouselSettings"
+                           v-if="this.windowSize <= 768">
             <div>
                <div class="carouselCard">
                   <span class="firstSub">사전예약 없는!<br>신작 게임 플레이</span>
@@ -29,11 +32,10 @@
                   <img class="cardImg" src="../assets/images/intro-img-3.png" alt="">
                </div>
             </div>
-
          </VueSlickCarousel>
 
          <!--일반 인트로카드-->
-         <div class="cardContainer" v-if="true">
+         <div class="cardContainer">
             <div class="card">
                <span class="firstSub">사전예약 없는!<br>신작 게임 플레이</span>
                <span class="secondSub">바로 플레이 하세요.</span>
@@ -66,7 +68,6 @@
                   <img class="download" src="../assets/images/download.png" alt="">
                </a>
             </div>
-
          </div>
       </div>
       <span class="copyright">Copyright © 2020 ForMakers</span>
@@ -79,9 +80,16 @@
    import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 
    export default {
+      created() {
+         this.windowSize = window.innerWidth
+         window.addEventListener('resize', () => {
+            this.windowSize = window.innerWidth
+         })
+      },
       components: {VueSlickCarousel},
       data() {
          return {
+            windowSize: '',
             carouselSettings: {
                dots: true,
                arrows: false,
@@ -100,7 +108,12 @@
                strings: ['포메스'],
             },
          }
-      }
+      },
+      // methods: {
+      //    windowWidth() {
+      //       this.windowSize = window.innerWidth
+      //    }
+      // }
    }
 </script>
 
