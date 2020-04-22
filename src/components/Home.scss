@@ -1,5 +1,28 @@
+body {
+  background-color: #00ABA7;
+}
+
+.home {
+  font-family: NotoSansKR-Regular, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: black;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-image: url("../assets/images/bg.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
 .content {
   margin-bottom: 25px;
+  position: relative;
 }
 
 //contact style
@@ -61,7 +84,6 @@
 
   .fomesLogo {
     width: 300px;
-    transform-origin: center;
   }
 
   .fomesSub {
@@ -93,7 +115,7 @@
 //copyright style
 .copyright {
   color: #ffffff;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 //stars style
@@ -108,7 +130,6 @@
 
 #starsFirst {
   position: absolute;
-  z-index: -1;
   width: 1px;
   height: 1px;
   background: transparent;
@@ -128,7 +149,6 @@
 
 #starsSecond {
   position: absolute;
-  z-index: -1;
   width: 2px;
   height: 2px;
   background: transparent;
@@ -148,7 +168,6 @@
 
 #starsThird {
   position: absolute;
-  z-index: -1;
   width: 3px;
   height: 3px;
   background: transparent;
@@ -169,16 +188,14 @@
 //반응형
 @media screen and (max-width: 768px) {
   .content {
+    overflow: scroll;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    margin: 0;
+    margin-bottom: 0;
 
     .cardContainer {
       display: none;
-      flex-wrap: wrap;
     }
 
     .logoContainer {
@@ -191,7 +208,6 @@
 
       .fomesLogo {
         width: 230px;
-        transform-origin: center;
       }
 
       .fomesSub {
@@ -244,7 +260,6 @@
 
     .contactBox {
       padding: 0;
-
       .contact {
         display: flex;
         justify-content: center;
@@ -258,8 +273,6 @@
     justify-content: center;
     margin: 10px 0;
     font-size: 12px;
-    width: 100%;
-    height: 100%;
   }
 }
 

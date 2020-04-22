@@ -1,5 +1,5 @@
 <template>
-   <div>
+   <div class="home">
       <div id="starsFirst"></div>
       <div id="starsSecond"></div>
       <div id="starsThird"></div>
@@ -72,7 +72,7 @@
             </div>
          </div>
       </div>
-      <span class="copyright">Copyright © 2020 ForMakers</span>
+      <div class="copyright">Copyright © 2020 ForMakers</div>
    </div>
 </template>
 

@@ -1,7 +1,5 @@
 <template>
-    <div id="app">
         <HomeComponent></HomeComponent>
-    </div>
 </template>
 
 <script>
@@ -11,7 +9,6 @@
         components: {
             HomeComponent
         },
-        // el: '#app'
     }
 </script>
 
