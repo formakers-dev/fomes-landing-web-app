@@ -57,7 +57,7 @@ jobs: # 작업 목록
       # 각 job 마다 매번 checkout 을 정의하는 것은 비효율적이므로 persist_to_workspace 라는 옵션을 이용하여 job 간에 파일을 공유할 수 있게 해준다.
       # 다음 job 에서 docker 이미지를 사용 할 수 있도록 workspace 에 저장해둔다.
       - persist_to_workspace:
-          root:
+          root: .
           paths: dist # 공유할 패스를 명시
       - run: # 해당 디렉토리 파일을 확인
           name: check dist directory
