@@ -65,15 +65,15 @@ jobs: # 작업 목록
 
   deploy:
     working_directory: ~/girl-landing # 작업이 수행될 디렉토리
-      docker: # 해당 job을 어디서 수행할 것인지에 대한 구성.
-          - image: circleci/node:8.11 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
-      steps: # 배포할 때 사용할 스크립트를 step 별로 실행하게 된다. (작업의 순서)
-        - checkout # workflow 에서 트리거된 git branch 를 checkout 한다.
-        - attach_workspace: # 지정한 workspace 를 attach 해준다. (서클씨아이에 올려준다)
-            at: ~/girl-landing
-        - run:
-            name: Dev Firebase Deploy
-            command:  firebase deploy --only hosting:fomes-landing-dev --token "$DEV_FIREBASE_TOKEN"
+    docker: # 해당 job을 어디서 수행할 것인지에 대한 구성.
+        - image: circleci/node:8.11 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
+    steps: # 배포할 때 사용할 스크립트를 step 별로 실행하게 된다. (작업의 순서)
+      - checkout # workflow 에서 트리거된 git branch 를 checkout 한다.
+      - attach_workspace: # 지정한 workspace 를 attach 해준다. (서클씨아이에 올려준다)
+          at: ~/girl-landing
+      - run:
+          name: Dev Firebase Deploy
+          command:  firebase deploy --only hosting:fomes-landing-dev --token "$DEV_FIREBASE_TOKEN"
 
 # Workflow 는 CircleCI 에서 수행되는 모든 작업을 조율하는 설정키워드이다.
 # 각 workflow 는 설정파일 내에 고유한 이름으로 구성되어야 하며,
