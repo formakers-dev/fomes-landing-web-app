@@ -3,7 +3,7 @@ jobs: # 작업 목록
   test:
     working_directory: ~/girl-landing # 작업이 수행될 디렉토리
     docker: # 해당 job을 어디서 수행할 것인지에 대한 구성.
-      - image: circleci/node:10 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
+      - image: circleci/node:13.7 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
     steps: # 배포할 때 사용할 스크립트를 step 별로 실행하게 된다. (작업의 순서)
       - checkout # workflow 에서 트리거된 git branch 를 checkout 한다.
       - attach_workspace: # 지정한 workspace 를 attach 해준다. (서클씨아이에 올려준다)
