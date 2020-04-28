@@ -66,7 +66,7 @@ jobs: # 작업 목록
           name: check dist directory
           command: pwd; ls; ls dist
 
-  deploy:
+  dev-deploy:
     working_directory: ~/girl-landing # 작업이 수행될 디렉토리
     docker: # 해당 job을 어디서 수행할 것인지에 대한 구성.
         - image: circleci/node:13.7 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
@@ -92,6 +92,35 @@ jobs: # 작업 목록
           name: Dev Firebase Deploy
           command:  ./node_modules/.bin/firebase deploy --project dev --only hosting:fomes-landing-dev --token "$DEV_FIREBASE_TOKEN"
 
+  prd-deploy:
+    working_directory: ~/girl-landing # 작업이 수행될 디렉토리
+    docker: # 해당 job을 어디서 수행할 것인지에 대한 구성.
+        - image: circleci/node:13.7 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
+    steps: # 배포할 때 사용할 스크립트를 step 별로 실행하게 된다. (작업의 순서)
+      - checkout
+      - attach_workspace:
+          at: ~/girl-landing
+      - run:
+          name: npm 업데이트
+          command: sudo npm install -g npm@6.1.0
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-dependencies-{{ .Branch }}-
+      - run:
+          name: npm 설치
+          command: npm install
+      - save_cache:
+          key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: firebase.json prd용으로 대체
+          command: mv firebase-prd.json firebase.json
+      - run:
+          name: Prd Firebase Deploy
+          command:  ./node_modules/.bin/firebase deploy --project prd --only hosting:fomes-playground --token "$FIREBASE_TOKEN"
+
 # Workflow 는 CircleCI 에서 수행되는 모든 작업을 조율하는 설정키워드이다.
 # 각 workflow 는 설정파일 내에 고유한 이름으로 구성되어야 하며,
 # 해당 workflow 의 이름을 키로, 수행할 내용을 해당 workflow 의 값으로 구성된다.
@@ -101,6 +130,17 @@ workflows:
     jobs:
 #      - test
       - build
-      - deploy: # deploy job은 build가 끝난뒤에 실행한다.
+      - dev-deploy: # deploy job은 build가 끝난뒤에 실행한다.
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - master
+      - prd-deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - release
