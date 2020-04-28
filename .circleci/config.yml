@@ -84,4 +84,6 @@ workflows:
     jobs:
 #      - test
       - build
-      - deploy
+      - deploy # deploy job은 build가 끝난뒤에 실행한다.
+          requires:
+            - build
