@@ -68,9 +68,26 @@ jobs: # 작업 목록
     docker: # 해당 job을 어디서 수행할 것인지에 대한 구성.
         - image: circleci/node:8.11 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
     steps: # 배포할 때 사용할 스크립트를 step 별로 실행하게 된다. (작업의 순서)
-      - checkout # workflow 에서 트리거된 git branch 를 checkout 한다.
-      - attach_workspace: # 지정한 workspace 를 attach 해준다. (서클씨아이에 올려준다)
+      - checkout
+      - attach_workspace:
           at: ~/girl-landing
+      - run:
+          name: npm 업데이트
+          command: sudo npm install -g npm@6.1.0
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-dependencies-{{ .Branch }}-
+      - run:
+          name: npm 설치
+          command: npm install
+      - save_cache:
+          key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Build in Development Mode
+          command: npm run build
       - run:
           name: Dev Firebase Deploy
           command:  firebase deploy --only hosting:fomes-landing-dev --token "$DEV_FIREBASE_TOKEN"
