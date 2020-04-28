@@ -46,6 +46,9 @@ jobs: # 작업 목록
       - run:
           name: npm 설치
           command: npm install
+      - run:
+          name: sass rebuild
+          command: npm rebuild node-sass
       - save_cache:
           key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
