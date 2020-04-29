@@ -1,58 +1,59 @@
-version: 2 # CircleCI의 언어 버전
-jobs: # 작업 목록
-  test:
+aliases:
+  - &attach_workspace # 지정한 workspace 를 attach 해줌 (CircleCI에 올려준다)
+    at: ~/girl-landing
+
+  - &update-npm # command 에 지정된 명령어 수행. 여기서는 npm 업데이트를 한다.
+    name: npm 업데이트
+    command: sudo npm install -g npm@6.1.0
+
+  - &restore-npm-cache # keys 로 지정된 키로 캐시에 저장된 내용을 복구한다.
+    # 설치된 아이들의 대한 의존성. 현재 설치된 것에 대한 저장(캐싱)
+    keys:
+      - v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+        # checksum "package.json" 이란 해당 파일의 현 상태를 체크할 수 있는 명령어
+      - v1-dependencies-{{ .Branch }}-
+
+  - &install-npm # npm 설치
+    name: npm 설치
+    command: npm install
+
+  - &save-npm-cache # key 에 지정된 키로 paths 에 명시된 경로의 내용을 캐시에 저장한다.
+    key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+    paths:
+      - node_modules
+
+defaults: &defaults
     working_directory: ~/girl-landing # 작업이 수행될 디렉토리
     docker: # 해당 job을 어디서 수행할 것인지에 대한 구성.
       - image: circleci/node:13.7 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
+
+version: 2 # CircleCI의 언어 버전
+jobs: # 작업 목록
+  test:
+    <<: *defaults
     steps: # 배포할 때 사용할 스크립트를 step 별로 실행하게 된다. (작업의 순서)
       - checkout # workflow 에서 트리거된 git branch 를 checkout 한다.
-      - attach_workspace: # 지정한 workspace 를 attach 해준다. (서클씨아이에 올려준다)
-          at: ~/girl-landing
-      - run: # command 에 지정된 명령어 수행. 여기서는 npm 업데이트를 한다.
-          name: npm 업데이트
-          command: sudo npm install -g npm@6.1.0
-      - restore_cache: # keys 로 지정된 키로 캐시에 저장된 내용을 복구한다.
-          # 설치된 아이들의 대한 의존성. 현재 설치된 것에 대한 저장(캐싱)
-          keys:
-            - v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-            # checksum "package.json" 이란 해당 파일의 현상태를 체크할 수 있는 명령어
-            - v1-dependencies-{{ .Branch }}-
-      - run: # npm 설치
-          name: npm 설치
-          command: npm install
-      - save_cache: # key 에 지정된 키로 paths 에 명시된 경로의 내용을 캐시에 저장한다.
-          key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      - attach_workspace: *attach_workspace
+      - run: *update-npm
+      - restore_cache: *restore-npm-cache
+      - run: *install-npm
+      - save_cache: *save-npm-cache
       - run: # npm 테스트
           name: npm 테스트
           command: npm test
 
   build:
-    working_directory: ~/girl-landing
-    docker:
-      - image: circleci/node:13.7
+    <<: *defaults
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/girl-landing
-      - run:
-          name: npm 업데이트
-          command: sudo npm install -g npm@6.1.0
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-            - v1-dependencies-{{ .Branch }}-
-      - run:
-          name: npm 설치
-          command: npm install
+      - attach_workspace: *attach_workspace
+      - run: *update-npm
+      - restore_cache: *restore-npm-cache
+      - run: *install-npm
       - run:
           name: sass rebuild
           command: npm rebuild node-sass
-      - save_cache:
-          key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      - save_cache: *save-npm-cache
       - run:
           name: Build in Development Mode
           command: npm run build
@@ -67,53 +68,27 @@ jobs: # 작업 목록
           command: pwd; ls; ls dist
 
   dev-deploy:
-    working_directory: ~/girl-landing # 작업이 수행될 디렉토리
-    docker: # 해당 job을 어디서 수행할 것인지에 대한 구성.
-        - image: circleci/node:13.7 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
-    steps: # 배포할 때 사용할 스크립트를 step 별로 실행하게 된다. (작업의 순서)
+    <<: *defaults
+    steps:
       - checkout
-      - attach_workspace:
-          at: ~/girl-landing
+      - attach_workspace: *attach_workspace
+      - run: *update-npm
+      - restore_cache: *restore-npm-cache
+      - run: *install-npm
+      - save_cache: *save-npm-cache
       - run:
-          name: npm 업데이트
-          command: sudo npm install -g npm@6.1.0
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-            - v1-dependencies-{{ .Branch }}-
-      - run:
-          name: npm 설치
-          command: npm install
-      - save_cache:
-          key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Dev Firebase Deploy
+          name: Dev Firebase Deploy # firebase 경로 지정
           command:  ./node_modules/.bin/firebase deploy --project dev --only hosting:fomes-landing-dev --token "$DEV_FIREBASE_TOKEN"
 
   prd-deploy:
-    working_directory: ~/girl-landing # 작업이 수행될 디렉토리
-    docker: # 해당 job을 어디서 수행할 것인지에 대한 구성.
-        - image: circleci/node:13.7 # 라는 도커 이미지를 사용하여 도커 컨테이너에서 빌드작업을 수행한다. (/node 버전)
-    steps: # 배포할 때 사용할 스크립트를 step 별로 실행하게 된다. (작업의 순서)
+    <<: *defaults
+    steps:
       - checkout
-      - attach_workspace:
-          at: ~/girl-landing
-      - run:
-          name: npm 업데이트
-          command: sudo npm install -g npm@6.1.0
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-            - v1-dependencies-{{ .Branch }}-
-      - run:
-          name: npm 설치
-          command: npm install
-      - save_cache:
-          key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - node_modules
+      - attach_workspace: *attach_workspace
+      - run: *update-npm
+      - restore_cache: *restore-npm-cache
+      - run: *install-npm
+      - save_cache: *save-npm-cache
       - run:
           name: firebase.json prd용으로 대체
           command: mv firebase-prd.json firebase.json
@@ -126,7 +101,7 @@ jobs: # 작업 목록
 # 해당 workflow 의 이름을 키로, 수행할 내용을 해당 workflow 의 값으로 구성된다.
 workflows:
   version: 2
-  chacha: # Workflow 이름
+  build-deploy: # Workflow 이름
     jobs:
 #      - test
       - build
@@ -135,7 +110,7 @@ workflows:
             - build
           filters:
             branches:
-              only:
+              only: # master 브랜치에 push 했을때만 실행
                 - master
       - prd-deploy:
           requires:
