@@ -1,6 +1,6 @@
 <template>
    <div class="home">
-      <div style="display: none">test</div>
+      <div style="display: none">Version : {{version}}</div>
       <div id="starsFirst"></div>
       <div id="starsSecond"></div>
       <div id="starsThird"></div>
@@ -80,6 +80,7 @@
    import VueSlickCarousel from 'vue-slick-carousel'
    import 'vue-slick-carousel/dist/vue-slick-carousel.css'
    import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+   import packageJson from "../../package.json";
 
    export default {
       created() {
@@ -91,6 +92,7 @@
       components: {VueSlickCarousel},
       data() {
          return {
+            version: packageJson.version.toString(),
             windowSize: '',
             carouselSettings: {
                dots: true,
@@ -111,11 +113,6 @@
             },
          }
       },
-      // methods: {
-      //    windowWidth() {
-      //       this.windowSize = window.innerWidth
-      //    }
-      // }
    }
 </script>
 
