@@ -1,5 +1,6 @@
 <template>
    <div class="home">
+      <div style="display: none">Version : {{version}}</div>
       <div id="starsFirst"></div>
       <div id="starsSecond"></div>
       <div id="starsThird"></div>
@@ -9,7 +10,6 @@
                <span class="contact">contact@formakers.net</span>
             </a>
          </div>
-         <div style="display: none">prd test</div>
          <!--캐러셀 인트로카드-->
          <VueSlickCarousel class="carouselContainer" v-bind="carouselSettings"
                            v-if="this.windowSize <= 768">
@@ -80,6 +80,7 @@
    import VueSlickCarousel from 'vue-slick-carousel'
    import 'vue-slick-carousel/dist/vue-slick-carousel.css'
    import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+   import packageJson from "../../package.json";
 
    export default {
       created() {
@@ -91,6 +92,7 @@
       components: {VueSlickCarousel},
       data() {
          return {
+            version: packageJson.version.toString(),
             windowSize: '',
             carouselSettings: {
                dots: true,
@@ -111,11 +113,6 @@
             },
          }
       },
-      // methods: {
-      //    windowWidth() {
-      //       this.windowSize = window.innerWidth
-      //    }
-      // }
    }
 </script>
 
