@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueTypedJs from 'vue-typed-js'
-import VueAnalytics from 'vue-analytics'
+import VueGtag from 'vue-gtag'
 
 Vue.use(VueTypedJs);
-Vue.use(VueAnalytics, {
-    id: 'UA-106038737-1'
+Vue.use(VueGtag, {
+    config: {
+        id: 'UA-106038737-1'
+    }
 });
 
 Vue.config.productionTip = false;
