@@ -81,7 +81,7 @@ jobs: # 작업 목록
           command:  ./node_modules/.bin/firebase deploy --project dev --only hosting:fomes-landing-dev --token "$DEV_FIREBASE_TOKEN"
       - run:
           name: Archive and Delivery to Slack
-          command: bash .circleci/delivery-to-slack.sh DEV _general $CIRCLE_BRANCH
+          command: bash .circleci/delivery-to-slack.sh DEV dev $CIRCLE_BRANCH
 
   prd-deploy:
     <<: *defaults
