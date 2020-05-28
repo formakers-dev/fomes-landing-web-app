@@ -65,7 +65,7 @@
                </vue-typed-js>
             </div>
             <div>
-               <a href="https://play.google.com/store/apps/details?id=com.formakers.fomes&hl=ko"
+               <a href="https://play.google.com/store/apps/details?id=com.formakers.fomes&referrer=utm_source%3Dlanding-page"
                   target="_blank">
                   <img class="download" src="../assets/images/download.png" alt="">
                </a>
