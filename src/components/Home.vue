@@ -65,7 +65,7 @@
                </vue-typed-js>
             </div>
             <div>
-               <a href="https://play.google.com/store/apps/details?id=com.formakers.fomes&referrer=utm_source%3Dlanding-page"
+               <a v-bind:href="this.downloadUrl"
                   target="_blank">
                   <img class="download" src="../assets/images/download.png" alt="">
                </a>
@@ -81,19 +81,23 @@
    import 'vue-slick-carousel/dist/vue-slick-carousel.css'
    import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
    import packageJson from "../../package.json";
+   import QueryString from 'querystring';
 
    export default {
       created() {
-         this.windowSize = window.innerWidth
+         this.windowSize = window.innerWidth;
          window.addEventListener('resize', () => {
             this.windowSize = window.innerWidth
-         })
+         });
+
+         this.setDownloadUrl();
       },
       components: {VueSlickCarousel},
       data() {
          return {
             version: packageJson.version.toString(),
             windowSize: '',
+            downloadUrl: 'https://play.google.com/store/apps/details?id=com.formakers.fomes&referrer=utm_source%3Dlanding-page',
             carouselSettings: {
                dots: true,
                arrows: false,
@@ -112,6 +116,37 @@
                strings: ['포메스'],
             },
          }
+      },
+      methods: {
+         setDownloadUrl() {
+            try {
+               const parsedParams = QueryString.parse(location.search.startsWith('?')? location.search.substr(1) : location.search);
+
+               const utmParams = [];
+               let hasUtmContentParam = false;
+
+               for(const key in parsedParams) {
+                  if (key.startsWith('utm_')) {
+                     utmParams.push(key+'%3D'+parsedParams[key]);
+
+                     if (key === "utm_content") {
+                        hasUtmContentParam = true;
+                     }
+                  }
+               }
+
+               if (utmParams && utmParams.length > 0) {
+                  if (!hasUtmContentParam) {
+                     utmParams.push('utm_content%3Dlanding-page');
+                  }
+
+                  const utmParamsString = utmParams.join('%26');
+                  this.downloadUrl = 'https://play.google.com/store/apps/details?id=com.formakers.fomes&referrer=' + utmParamsString;
+               }
+            } catch(e) {
+               console.error(e);
+            }
+         },
       },
    }
 </script>
