@@ -67,8 +67,12 @@
             <div>
                <a v-bind:href="this.downloadUrl"
                   target="_blank">
-                  <img class="download" src="../assets/images/download.png" alt="">
+                  <img class="download" src="../assets/images/fomes-download.png" alt="">
                </a>
+              <a href="https://fomes-playground-alpha.web.app/"
+                 target="_blank">
+                <img class="download" src="../assets/images/fomes-web.png" alt="">
+              </a>
             </div>
          </div>
          <div class="copyright">Copyright © 2020 ForMakers</div>
