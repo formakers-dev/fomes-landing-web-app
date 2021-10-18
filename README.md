@@ -1,5 +1,8 @@
 # girl-landing
 
+- PRD : https://fomes-playground.web.app
+- DEV : https://fomes-landing-dev.web.app
+
 ## Project setup
 ```
 npm install
